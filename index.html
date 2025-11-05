@@ -3,44 +3,70 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>To‑Do List | Piyush</title>
+  <title>To-Do Pro | Piyush</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header class="app-header" aria-label="To-Do List Header">
-    <h1>📝 To‑Do List</h1>
-    <p class="subtitle">Add • Complete • Edit • Delete — Data saves in your browser</p>
+  <header class="app-header">
+    <div class="left">
+      <h1>📝 To‑Do Pro</h1>
+      <p class="subtitle">Priority • Categories • Dark mode • Sorting • Stats</p>
+    </div>
+    <div class="right">
+      <button id="theme-toggle" class="btn ghost" aria-label="Toggle theme">🌙</button>
+    </div>
   </header>
 
   <main class="container">
-    <section class="add-task" aria-label="Add a new task">
+    <section class="stats">
+      <div class="card" id="stat-overdue"><span class="kpi">0</span><small>Overdue</small></div>
+      <div class="card" id="stat-today"><span class="kpi">0</span><small>Due Today</small></div>
+      <div class="card" id="stat-completed"><span class="kpi">0</span><small>Completed</small></div>
+    </section>
+
+    <section class="add-task">
       <form id="task-form" autocomplete="off">
-        <input id="task-input" type="text" placeholder="What do you need to do?" aria-label="Task name" required />
+        <input id="task-input" type="text" placeholder="Task title…" required />
+        <input id="task-category" type="text" placeholder="Category (e.g. College)" />
+        <select id="task-priority" aria-label="Priority">
+          <option value="medium">Priority: Medium</option>
+          <option value="high">Priority: High</option>
+          <option value="low">Priority: Low</option>
+        </select>
         <input id="task-date" type="date" aria-label="Due date (optional)" />
-        <button id="add-btn" type="submit" class="btn primary">Add Task</button>
+        <button id="add-btn" type="submit" class="btn primary">Add</button>
       </form>
     </section>
 
-    <section class="controls" aria-label="List controls">
+    <section class="controls">
       <div class="filters">
         <button class="chip active" data-filter="all">All</button>
         <button class="chip" data-filter="active">Active</button>
         <button class="chip" data-filter="completed">Completed</button>
+        <button class="chip" data-filter="overdue">Overdue</button>
       </div>
-      <div class="search-wrap">
-        <input id="search" type="search" placeholder="Search tasks…" aria-label="Search tasks" />
+      <div class="sort-search">
+        <select id="sort-by">
+          <option value="created_asc">Sort: Created ↑</option>
+          <option value="created_desc">Sort: Created ↓</option>
+          <option value="due_asc">Sort: Due Date ↑</option>
+          <option value="due_desc">Sort: Due Date ↓</option>
+          <option value="priority">Sort: Priority</option>
+          <option value="title">Sort: Title</option>
+        </select>
+        <input id="search" type="search" placeholder="Search…" />
       </div>
     </section>
 
-    <section class="list" aria-label="Task list">
+    <section class="list">
       <ul id="task-list" role="list"></ul>
     </section>
 
     <section class="footer-actions">
-      <div id="counts" aria-live="polite">0 total • 0 active • 0 completed</div>
+      <div id="counts">0 total • 0 active • 0 completed</div>
       <div class="actions-right">
         <button id="clear-completed" class="btn ghost">Clear Completed</button>
         <button id="export-json" class="btn ghost">Export</button>
@@ -51,27 +77,31 @@
   </main>
 
   <footer class="app-footer">
-    <small>Made by Piyush • Works offline (Local Storage)</small>
+    <small>Made by Piyush • Pro features with LocalStorage</small>
   </footer>
 
   <template id="task-item-template">
     <li class="task" data-id="">
       <label class="checkbox">
-        <input type="checkbox" class="toggle" aria-label="Mark task complete" />
-        <span class="checkmark" aria-hidden="true"></span>
+        <input type="checkbox" class="toggle" />
+        <span class="checkmark"></span>
       </label>
 
       <div class="task-main">
-        <div class="task-title" tabindex="0"></div>
+        <div class="row">
+          <span class="priority-badge">MED</span>
+          <div class="task-title" tabindex="0"></div>
+        </div>
         <div class="meta">
+          <span class="cat"></span>
           <span class="due"></span>
           <span class="ts"></span>
         </div>
       </div>
 
       <div class="task-actions">
-        <button class="icon-btn edit" title="Edit" aria-label="Edit task">✏️</button>
-        <button class="icon-btn delete" title="Delete" aria-label="Delete task">🗑️</button>
+        <button class="icon-btn edit" title="Edit">✏️</button>
+        <button class="icon-btn delete" title="Delete">🗑️</button>
       </div>
     </li>
   </template>
